@@ -11,11 +11,13 @@ app.use(bodyParser.json()) // menangkap url dalam bentuk json
 app.get('/', (req,res) => res.send('Hewwo World!')) // req request response
 
 //membuat request post
+//key request: firstname, lastname isi di Body > form urlencoded
 app.post('/hello', function(req,res){
     const respon = {
         statusCode: 200,
         error: "",
-        message: "hello json"
+        message: "hello json",
+        content: req.body
     }
     res.json(respon);
 })
