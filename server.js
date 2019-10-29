@@ -1,8 +1,13 @@
 const express = require('express')
 const app = express()
-const port = 3007
+const port = 3000
 
+//memanggil library body-parser
+const bodyParser = require("body-parser")
 
+//config body-parser
+app.use(bodyParser.urlencoded({extended:true})) // menangkap type request dalam bentuk form urlencoded
+app.use(bodyParser.json()) // menangkap url dalam bentuk json
 app.get('/', (req,res) => res.send('Hewwo World!')) // req request response
 
 //membuat request post
