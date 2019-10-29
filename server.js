@@ -18,14 +18,33 @@ app.get('/', (req,res) => res.send('Hewwo World!')) // req request response
 //membuat request post
 //key request: firstname, lastname isi di Body > form urlencoded
 app.post('/hello', function(req,res){
-    const respon = {
+    const response = {
         statusCode: 200,
         error: "",
         message: "hello json",
         content: req.body
     }
-    res.json(respon);
+    res.json(response);
 })
+
+app.post('/profile/create', async (req, res) => {
+    //Do something here
+    console.log(req.body)
+    const insert = {
+        firstname: req.body.firstname,
+        lastname: req.body.lastname
+    }
+    var person = new PersonModel(insert)
+    var result = await person.save()
+    const response = {
+        statusCode: 200,
+        error: "",
+        message: "hello resu",
+        content: result
+    }
+    res.json(response);
+})
+
 //commit lagi dengan nama "membuat request post"
 app.listen(port, () => console.log(`Example app listening on port ${port}!`))
 
