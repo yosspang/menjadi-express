@@ -4,7 +4,11 @@ const port = 3000
 
 //memanggil library body-parser
 const bodyParser = require("body-parser")
+
+//memanggil mongoConfig.js di file server
 const Mongoose = require('./mongoModel/mongoConfig')
+
+//membuat Model untuk mongodb
 const PersonModel = Mongoose.model("person",{
     firstname: String,
     lastname: String
@@ -39,8 +43,19 @@ app.post('/profile/create', async (req, res) => {
     const response = {
         statusCode: 200,
         error: "",
-        message: "hello resu",
+        message: "hello result",
         content: result
+    }
+    res.json(response);
+})
+
+app.get('/profile/list', async (req,res) =>{
+    var person =await PersonModel.find().exec();
+    const response = {
+        statusCode: 200,
+        error: "",
+        message: "List Person",
+        content: person
     }
     res.json(response);
 })
