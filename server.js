@@ -4,6 +4,11 @@ const port = 3000
 
 //memanggil library body-parser
 const bodyParser = require("body-parser")
+const Mongoose = require('./mongoModel/mongoConfig')
+const PersonModel = Mongoose.model("person",{
+    firstname: String,
+    lastname: String
+})
 
 //config body-parser
 app.use(bodyParser.urlencoded({extended:true})) // menangkap type request dalam bentuk form urlencoded
