@@ -34,6 +34,13 @@ app.post('/hello', function(req,res){
 app.post('/profile/create', async (req, res) => {
     //Do something here
     console.log(req.body)
+    if(!req.body.firstname || !req.body.lastname){
+        res.status(400).json({
+            statusCode: 400,
+            error: "first/last name parameter is required",
+            message: "first/last name parameter is required"
+        })
+    }
     const insert = {
         firstname: req.body.firstname,
         lastname: req.body.lastname
@@ -84,6 +91,27 @@ app.put('/profile/update/:id', async(req,res)=>{
     res.status(statusCode).json(response);
 })
 
+app.delete('/profile/delete/:id', async(req,res)=>{
+    const isExist = Mongoose.Types.ObjectId.isValid(req.params.id)
+    // check dataobject id valid jika valid lakukan eksekusi delete
+    let statusCode = 200
+    let message = "Delete Person"
+    if(isExist){ //jika id valid maka jalankan method delete
+        var person = await PersonModel.findByIdAndDelete(req.params.id).exec();
+    }else{
+        statusCode= 404
+        message= "Object Id invalid"
+        var person = null
+    }
+    
+    const response = {
+        statusCode: statusCode,
+        error: message,
+        message: message,
+        content: person
+    }
+    res.status(statusCode).json(response);
+})
+
 //commit lagi dengan nama "membuat request post"
 app.listen(port, () => console.log(`Example app listening on port ${port}!`))
-
